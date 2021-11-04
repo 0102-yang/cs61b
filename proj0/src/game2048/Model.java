@@ -40,7 +40,6 @@ public class Model extends Observable {
      * corner. Used for testing purposes.
      */
     public Model(int[][] rawValues, int score, int maxScore, boolean gameOver) {
-        int size = rawValues.length;
         this.board = new Board(rawValues, score);
         this.score = score;
         this.maxScore = maxScore;
@@ -120,7 +119,7 @@ public class Model extends Observable {
         boolean changed;
         changed = false;
 
-        // TODO: Modify this.board (and perhaps this.score) to account
+        // DONE: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
         int size = board.size();
@@ -390,7 +389,9 @@ public class Model extends Observable {
         }
         String over = gameOver() ? "over" : "not over";
         out.format("] %d (max: %d) (game is %s) %n", score(), maxScore(), over);
-        return out.toString();
+        String res = out.toString();
+        out.close();
+        return res;
     }
 
     @Override

@@ -16,14 +16,18 @@ public class Board implements Iterable<Tile> {
         this.viewPerspective = Side.NORTH;
     }
 
-    /** Shifts the view of the board such that the board behaves as if side S is north. */
+    /**
+     * Shifts the view of the board such that the board behaves as if side S is
+     * north.
+     */
     public void setViewingPerspective(Side s) {
         this.viewPerspective = s;
     }
 
     /**
-     * Create a board where RAWVALUES hold the values of the tiles on the board (0 is null) with a
-     * current score of SCORE and the viewing perspective set to north.
+     * Create a board where RAWVALUES hold the values of the tiles on the board (0
+     * is null) with a current score of SCORE and the viewing perspective set to
+     * north.
      */
     public Board(int[][] rawValues, int score) {
         int size = rawValues.length;
@@ -54,16 +58,16 @@ public class Board implements Iterable<Tile> {
     }
 
     /**
-     * Return the current Tile at (COL, ROW), when sitting with the board oriented so that SIDE is
-     * at the top (farthest) from you.
+     * Return the current Tile at (COL, ROW), when sitting with the board oriented
+     * so that SIDE is at the top (farthest) from you.
      */
     private Tile vtile(int col, int row, Side side) {
         return this.values[side.col(col, row, size())][side.row(col, row, size())];
     }
 
     /**
-     * Return the current Tile at (COL, ROW), where 0 <= ROW < size(), 0 <= COL < size(). Returns
-     * null if there is no tile there.
+     * Return the current Tile at (COL, ROW), where 0 <= ROW < size(), 0 <= COL <
+     * size(). Returns null if there is no tile there.
      */
     public Tile tile(int col, int row) {
         return vtile(col, row, this.viewPerspective);
@@ -82,14 +86,14 @@ public class Board implements Iterable<Tile> {
     }
 
     /**
-     * Places the Tile TILE at column COL, row ROW where COL and ROW are treated as coordinates with
-     * respect to the current viewPerspective.
+     * Places the Tile TILE at column COL, row ROW where COL and ROW are treated as
+     * coordinates with respect to the current viewPerspective.
      *
-     * <p>Returns whether or not this move is a merge.
+     * <p>
+     * Returns whether or not this move is a merge.
      */
     public boolean move(int col, int row, Tile tile) {
-        int pcol = this.viewPerspective.col(col, row, size()),
-                prow = this.viewPerspective.row(col, row, size());
+        int pcol = this.viewPerspective.col(col, row, size()), prow = this.viewPerspective.row(col, row, size());
         if (tile.col() == pcol && tile.row() == prow) {
             return false;
         }
@@ -120,7 +124,9 @@ public class Board implements Iterable<Tile> {
             }
             out.format("|%n");
         }
-        return out.toString();
+        String res = out.toString();
+        out.close();
+        return res;
     }
 
     /** Iterates through teach tile in the board. */

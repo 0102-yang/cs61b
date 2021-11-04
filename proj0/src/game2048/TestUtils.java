@@ -1,7 +1,12 @@
 package game2048;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+/**
+ * @author cs61b
+ */
 public class TestUtils {
 
     /** The Model we'll be testing. */
@@ -11,25 +16,19 @@ public class TestUtils {
 
     /** Utility method to generate an error message. */
     public static String boardShouldChange(Side side) {
-        return "When tilted to the "
-                + side
-                + ", the model should change, but"
-                + " the call to tilt returned false.\nModel after call:"
-                + TestUtils.model;
+        return "When tilted to the " + side + ", the model should change, but"
+                + " the call to tilt returned false.\nModel after call:" + TestUtils.model;
     }
 
     /** Utility method to generate an error message. */
     public static String boardShouldNotChange(Side side) {
-        return "When tilted to the "
-                + side
-                + ", the model should NOT change,"
-                + " but the call to tilt returned true.\nModel after call:"
-                + TestUtils.model;
+        return "When tilted to the " + side + ", the model should NOT change,"
+                + " but the call to tilt returned true.\nModel after call:" + TestUtils.model;
     }
 
     /**
-     * Updates the static variable model to be the Model with board attribute as described by
-     * VALUES.
+     * Updates the static variable model to be the Model with board attribute as
+     * described by VALUES.
      */
     public static void updateModel(int[][] values, int score, int maxScore, boolean gameOver) {
         assert values.length == TestUtils.SIZE : "board must have 4x4 dimensions";
@@ -38,35 +37,32 @@ public class TestUtils {
     }
 
     /**
-     * Checks that the static variable model is configured as described by VALUES with score
-     * attribute SCORE.
+     * Checks that the static variable model is configured as described by VALUES
+     * with score attribute SCORE.
      *
-     * @param values - a 2D array of integers describing the expected board a "0" element represents
-     *     a null Tile.
-     * @param score - what score the model should have.
+     * @param values    - a 2D array of integers describing the expected board a "0"
+     *                  element represents a null Tile.
+     * @param score     - what score the model should have.
      * @param maxScore
      * @param prevBoard - what the board looked like before this move.
-     * @param currMove - the Side that we tilted towards.
+     * @param currMove  - the Side that we tilted towards.
      */
-    public static void checkModel(
-            int[][] values, int score, int maxScore, String prevBoard, Side currMove) {
+    public static void checkModel(int[][] values, int score, int maxScore, String prevBoard, Side currMove) {
 
         Model expected = new Model(values, score, maxScore, false);
-        String errMsg =
-                String.format(
-                        "Board incorrect. Before tilting towards"
-                                + " %s, your board looked like:%s%nAfter the call to"
-                                + " tilt, we expected:%s%nBut your board looks like:%s.",
-                        currMove, prevBoard, expected.toString(), TestUtils.model.toString());
+        String errMsg = String.format(
+                "Board incorrect. Before tilting towards" + " %s, your board looked like:%s%nAfter the call to"
+                        + " tilt, we expected:%s%nBut your board looks like:%s.",
+                currMove, prevBoard, expected.toString(), TestUtils.model.toString());
         assertEquals(errMsg, expected, TestUtils.model);
     }
 
     /**
      * Checks that the returned boolean of a call to the tilt method is correct.
      *
-     * @param s - the side that was tilted (the parameter to tilt).
+     * @param s        - the side that was tilted (the parameter to tilt).
      * @param expected - what the expected return value is.
-     * @param actual - what the actual return value is.
+     * @param actual   - what the actual return value is.
      */
     public static void checkChanged(Side s, boolean expected, boolean actual) {
         String changedErrMsg;

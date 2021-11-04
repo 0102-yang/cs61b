@@ -1,12 +1,17 @@
 package game2048;
 
-import ucb.gui2.Pad;
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+import static java.lang.Math.round;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static java.lang.Math.*;
+import ucb.gui2.Pad;
 
 /**
  * A widget that displays a 2048 board.
@@ -18,13 +23,10 @@ class BoardWidget extends Pad {
     /* Parameters controlling sizes, speeds, colors, and fonts. */
 
     /** Colors of empty squares and grid lines. */
-    static final Color EMPTY_SQUARE_COLOR = new Color(205, 192, 176),
-            BAR_COLOR = new Color(184, 173, 158);
+    static final Color EMPTY_SQUARE_COLOR = new Color(205, 192, 176), BAR_COLOR = new Color(184, 173, 158);
 
     /** Bar width separating tiles and length of tile's side (pixels). */
-    static final int TILE_SEP = 15,
-            TILE_SIDE = 100,
-            TILE_SIDE_SEP = BoardWidget.TILE_SEP + BoardWidget.TILE_SIDE;
+    static final int TILE_SEP = 15, TILE_SIDE = 100, TILE_SIDE_SEP = BoardWidget.TILE_SEP + BoardWidget.TILE_SIDE;
 
     /** Font used for numbering on tiles with <= 2 digits. */
     static final Font TILE_FONT2 = new Font("SansSerif", 1, 48);
@@ -57,47 +59,38 @@ class BoardWidget extends Pad {
     /** Mapping from numbers on tiles to their text and background colors. */
     static final HashMap<Integer, Color[]> TILE_COLORS = new HashMap<>();
 
-    /** List of tile values and corresponding background and foreground color values. */
-    private static final int[][] TILE_COLOR_MAP = {
-        {2, 0x776e65, 0xeee4da},
-        {4, 0x776e65, 0xede0c8},
-        {8, 0xf9f6f2, 0xf2b179},
-        {16, 0xf9f6f2, 0xf59563},
-        {32, 0xf9f6f2, 0xf67c5f},
-        {64, 0xf9f6f2, 0xf65e3b},
-        {128, 0xf9f6f2, 0xedcf72},
-        {256, 0xf9f6f2, 0xedcc61},
-        {512, 0xf9f6f2, 0xedc850},
-        {1024, 0xf9f6f2, 0xedc53f},
-        {2048, 0xf9f6f2, 0xedc22e},
-    };
+    /**
+     * List of tile values and corresponding background and foreground color values.
+     */
+    private static final int[][] TILE_COLOR_MAP = { { 2, 0x776e65, 0xeee4da }, { 4, 0x776e65, 0xede0c8 },
+            { 8, 0xf9f6f2, 0xf2b179 }, { 16, 0xf9f6f2, 0xf59563 }, { 32, 0xf9f6f2, 0xf67c5f },
+            { 64, 0xf9f6f2, 0xf65e3b }, { 128, 0xf9f6f2, 0xedcf72 }, { 256, 0xf9f6f2, 0xedcc61 },
+            { 512, 0xf9f6f2, 0xedc850 }, { 1024, 0xf9f6f2, 0xedc53f }, { 2048, 0xf9f6f2, 0xedc22e }, };
 
     static {
         /* { "LABEL", "TEXT COLOR (hex)", "BACKGROUND COLOR (hex)" } */
         for (int[] tileData : BoardWidget.TILE_COLOR_MAP) {
-            BoardWidget.TILE_COLORS.put(
-                    tileData[0], new Color[] {new Color(tileData[1]), new Color(tileData[2])});
+            BoardWidget.TILE_COLORS.put(tileData[0], new Color[] { new Color(tileData[1]), new Color(tileData[2]) });
         }
     }
-    ;
 
     /** A graphical representation of a 2048 board with SIZE rows and columns. */
     BoardWidget(int size) {
-        this._size = size;
-        this._boardSide = size * BoardWidget.TILE_SIDE_SEP + BoardWidget.TILE_SEP;
-        this._tiles = new ArrayList<>();
-        setPreferredSize(this._boardSide, this._boardSide);
+        this.size = size;
+        this.boardSide = size * BoardWidget.TILE_SIDE_SEP + BoardWidget.TILE_SEP;
+        this.tiles = new ArrayList<>();
+        setPreferredSize(this.boardSide, this.boardSide);
     }
 
     /** Clear all tiles from the board. */
     synchronized void clear() {
-        this._tiles.clear();
+        this.tiles.clear();
         repaint();
     }
 
     /** Indicate that "GAME OVER" label should be displayed. */
     synchronized void markEnd() {
-        this._end = true;
+        this.end = true;
         repaint();
     }
 
@@ -105,49 +98,40 @@ class BoardWidget extends Pad {
     /** Render board on G. */
     public synchronized void paintComponent(Graphics2D g) {
         g.setColor(BoardWidget.EMPTY_SQUARE_COLOR);
-        g.fillRect(0, 0, this._boardSide, this._boardSide);
+        g.fillRect(0, 0, this.boardSide, this.boardSide);
         g.setColor(BoardWidget.BAR_COLOR);
-        for (int k = 0; k <= this._boardSide; k += BoardWidget.TILE_SIDE_SEP) {
-            g.fillRect(0, k, this._boardSide, BoardWidget.TILE_SEP);
-            g.fillRect(k, 0, BoardWidget.TILE_SEP, this._boardSide);
+        for (int k = 0; k <= this.boardSide; k += BoardWidget.TILE_SIDE_SEP) {
+            g.fillRect(0, k, this.boardSide, BoardWidget.TILE_SEP);
+            g.fillRect(k, 0, BoardWidget.TILE_SEP, this.boardSide);
         }
-        for (Tile tile : this._tiles) {
+        for (Tile tile : this.tiles) {
             render(g, tile);
         }
-        if (this._end) {
+        if (this.end) {
             g.setFont(BoardWidget.OVERLAY_FONT);
             FontMetrics metrics = g.getFontMetrics();
             g.setColor(BoardWidget.OVERLAY_COLOR);
-            g.drawString(
-                    "GAME OVER",
-                    (this._boardSide - metrics.stringWidth("GAME OVER")) / 2,
-                    (2 * this._boardSide + metrics.getMaxAscent()) / 4);
+            g.drawString("GAME OVER", (this.boardSide - metrics.stringWidth("GAME OVER")) / 2,
+                    (2 * this.boardSide + metrics.getMaxAscent()) / 4);
         }
     }
 
     /** Render TILE on G. */
     private void render(Graphics2D g, Tile tile) {
-        int col0 = tile.col(),
-                row0 = tile.row(),
-                col1 = tile.next().col(),
-                row1 = tile.next().row();
-        int dcol = col0 < col1 ? 1 : col0 == col1 ? 0 : -1,
-                drow = row0 < row1 ? 1 : row0 == row1 ? 0 : -1;
+        int col0 = tile.col(), row0 = tile.row(), col1 = tile.next().col(), row1 = tile.next().row();
+        int dcol = col0 < col1 ? 1 : col0 == col1 ? 0 : -1, drow = row0 < row1 ? 1 : row0 == row1 ? 0 : -1;
 
         float vcol, vrow;
-        if (this._distMoved >= max(abs(col0 - col1), abs(row0 - row1))) {
+        if (this.distMoved >= max(abs(col0 - col1), abs(row0 - row1))) {
             vcol = col1;
             vrow = row1;
         } else {
-            vcol = col0 + this._distMoved * dcol;
-            vrow = row0 + this._distMoved * drow;
+            vcol = col0 + this.distMoved * dcol;
+            vrow = row0 + this.distMoved * drow;
         }
 
         int ulx = Math.round(vcol * BoardWidget.TILE_SIDE_SEP + BoardWidget.TILE_SEP),
-                uly =
-                        Math.round(
-                                (this._size - vrow - 1) * BoardWidget.TILE_SIDE_SEP
-                                        + BoardWidget.TILE_SEP);
+                uly = Math.round((this.size - vrow - 1) * BoardWidget.TILE_SIDE_SEP + BoardWidget.TILE_SEP);
 
         if (tile.value() < 100) {
             g.setFont(BoardWidget.TILE_FONT2);
@@ -158,23 +142,17 @@ class BoardWidget extends Pad {
         }
         FontMetrics metrics = g.getFontMetrics();
         int bloom;
-        if (this._bloomingTiles != null && this._bloomingTiles.contains(tile)) {
-            bloom = this._bloom;
+        if (this.bloomingTiles != null && this.bloomingTiles.contains(tile)) {
+            bloom = this.bloom;
         } else {
             bloom = 0;
         }
         g.setColor(BoardWidget.TILE_COLORS.get(tile.value())[1]);
-        g.fillRect(
-                ulx - bloom,
-                uly - bloom,
-                2 * bloom + BoardWidget.TILE_SIDE,
-                2 * bloom + BoardWidget.TILE_SIDE);
+        g.fillRect(ulx - bloom, uly - bloom, 2 * bloom + BoardWidget.TILE_SIDE, 2 * bloom + BoardWidget.TILE_SIDE);
         g.setColor(BoardWidget.TILE_COLORS.get(tile.value())[0]);
 
         String label = Integer.toString(tile.value());
-        g.drawString(
-                label,
-                ulx + (BoardWidget.TILE_SIDE - metrics.stringWidth(label)) / 2,
+        g.drawString(label, ulx + (BoardWidget.TILE_SIDE - metrics.stringWidth(label)) / 2,
                 uly + (2 * BoardWidget.TILE_SIDE + metrics.getMaxAscent()) / 4);
     }
 
@@ -193,13 +171,13 @@ class BoardWidget extends Pad {
     }
 
     /**
-     * Return the list of all tiles in NEXTTILES that are newly created or the result of merging of
-     * current tiles.
+     * Return the list of all tiles in NEXTTILES that are newly created or the
+     * result of merging of current tiles.
      */
     private ArrayList<Tile> newTiles(ArrayList<Tile> nextTiles) {
         ArrayList<Tile> bloomers = new ArrayList<>();
         bloomers.addAll(nextTiles);
-        for (Tile tile : this._tiles) {
+        for (Tile tile : this.tiles) {
             if (tile.next().value() == tile.value()) {
                 bloomers.remove(tile.next());
             }
@@ -218,78 +196,69 @@ class BoardWidget extends Pad {
 
     /** Create the blooming effect on tiles in BLOOMINGTILES. */
     private void doBlooming(ArrayList<Tile> bloomingTiles) {
-        this._bloomingTiles = bloomingTiles;
+        this.bloomingTiles = bloomingTiles;
         if (bloomingTiles.isEmpty()) {
             return;
         }
         for (int k = 1; k <= BoardWidget.BLOOM_TICKS; k += 1) {
-            this._bloom =
-                    round(
-                            BoardWidget.TILE_SIDE
-                                    * BoardWidget.BLOOM_FACTOR
-                                    * k
-                                    / BoardWidget.BLOOM_TICKS);
+            this.bloom = round(BoardWidget.TILE_SIDE * BoardWidget.BLOOM_FACTOR * k / BoardWidget.BLOOM_TICKS);
             repaint();
             tick();
         }
         for (int k = BoardWidget.BLOOM_TICKS - 1; k >= 0; k -= 1) {
-            this._bloom =
-                    round(
-                            BoardWidget.TILE_SIDE
-                                    * BoardWidget.BLOOM_FACTOR
-                                    * k
-                                    / BoardWidget.BLOOM_TICKS);
+            this.bloom = round(BoardWidget.TILE_SIDE * BoardWidget.BLOOM_FACTOR * k / BoardWidget.BLOOM_TICKS);
             repaint();
             tick();
         }
-        this._bloomingTiles = null;
+        this.bloomingTiles = null;
     }
 
     /**
-     * Move tiles to their new positions and save a new set of tiles from MODEL, which is assumed to
-     * reflect the next state of the tiles after the completion of all movement.
+     * Move tiles to their new positions and save a new set of tiles from MODEL,
+     * which is assumed to reflect the next state of the tiles after the completion
+     * of all movement.
      */
     synchronized void update(Model model) {
         float dist;
         ArrayList<Tile> nextTiles = modelTiles(model);
 
         dist = 0.0f;
-        for (Tile tile : this._tiles) {
+        for (Tile tile : this.tiles) {
             dist = Math.max(dist, tile.distToNext());
         }
-        this._distMoved = 0.0f;
-        while (this._distMoved < dist) {
+        this.distMoved = 0.0f;
+        while (this.distMoved < dist) {
             repaint();
             tick();
-            this._distMoved =
-                    Math.min(
-                            dist,
-                            this._distMoved + BoardWidget.TICK * BoardWidget.MOVE_DELTA / 1000.0f);
+            this.distMoved = Math.min(dist, this.distMoved + BoardWidget.TICK * BoardWidget.MOVE_DELTA / 1000.0f);
         }
 
         ArrayList<Tile> bloomers = newTiles(nextTiles);
-        this._tiles = nextTiles;
+        this.tiles = nextTiles;
         doBlooming(bloomers);
-        this._end = model.gameOver();
-        this._distMoved = 0.0f;
+        this.end = model.gameOver();
+        this.distMoved = 0.0f;
         repaint();
     }
 
     /** A list of Tiles currently being displayed. */
-    private ArrayList<Tile> _tiles;
+    private ArrayList<Tile> tiles;
     /** A list of Tiles currently being displayed with blooming effect. */
-    private ArrayList<Tile> _bloomingTiles;
+    private ArrayList<Tile> bloomingTiles;
 
-    /** Distance tiles have moved toward their next positions, in units of rows and columns. */
-    private float _distMoved;
+    /**
+     * Distance tiles have moved toward their next positions, in units of rows and
+     * columns.
+     */
+    private float distMoved;
     /** Amount to add to sides of tiles in _bloomingTiles. */
-    private int _bloom;
+    private int bloom;
 
     /** Number of rows and of columns. */
-    private final int _size;
+    private final int size;
 
     /** Length (in pixels) of the side of the board. */
-    private int _boardSide;
+    private int boardSide;
     /** True iff "GAME OVER" message is being displayed. */
-    private boolean _end;
+    private boolean end;
 }

@@ -1,8 +1,8 @@
 package game2048;
 
-import ucb.util.CommandArgs;
-
 import java.util.Random;
+
+import ucb.util.CommandArgs;
 
 /**
  * The main class for the 2048 game.
@@ -17,8 +17,8 @@ public class Main {
     static final double TILE2_PROBABILITY = 0.9;
 
     /**
-     * The main program. ARGS may contain the options --seed=NUM, (random seed); --log (record moves
-     * and random tiles selected.).
+     * The main program. ARGS may contain the options --seed=NUM, (random seed);
+     * --log (record moves and random tiles selected.).
      */
     public static void main(String... args) {
         CommandArgs options = new CommandArgs("--seed=(\\d+) --log=(.+)", args);
@@ -28,8 +28,9 @@ public class Main {
         }
 
         Random gen = new Random();
-        if (options.contains("--seed")) {
-            gen.setSeed(options.getLong("--seed"));
+        String seed = "--seed";
+        if (options.contains(seed)) {
+            gen.setSeed(options.getLong(seed));
         }
 
         Model model = new Model(Main.BOARD_SIZE);
