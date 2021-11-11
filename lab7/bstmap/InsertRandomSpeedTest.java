@@ -138,7 +138,7 @@ public class InsertRandomSpeedTest {
      * and outputs that int
      */
     public static int waitForPositiveInt(Scanner input) {
-        int ret = 0;
+        int ret;
         do {
             while (!input.hasNextInt()) {
                 errorBadIntegerInput();
