@@ -1,8 +1,8 @@
 package game2048;
 
-import java.util.Random;
-
 import ucb.util.CommandArgs;
+
+import java.util.Random;
 
 /**
  * The main class for the 2048 game.
@@ -11,9 +11,14 @@ import ucb.util.CommandArgs;
  */
 public class Main {
 
-    /** Number of squares on the side of a board. */
+    /**
+     * Number of squares on the side of a board.
+     */
     static final int BOARD_SIZE = 4;
-    /** Probability of choosing 2 as random tile (as opposed to 4). */
+
+    /**
+     * Probability of choosing 2 as random tile (as opposed to 4).
+     */
     static final double TILE2_PROBABILITY = 0.9;
 
     /**
@@ -57,4 +62,5 @@ public class Main {
 
         System.exit(0);
     }
+
 }

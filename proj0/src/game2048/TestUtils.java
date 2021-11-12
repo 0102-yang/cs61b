@@ -1,26 +1,33 @@
 package game2048;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author cs61b
  */
 public class TestUtils {
 
-    /** The Model we'll be testing. */
+    /**
+     * The Model we'll be testing.
+     */
     static Model model;
-    /** The size of the Board on these tests. */
+
+    /**
+     * The size of the Board on these tests.
+     */
     public static final int SIZE = 4;
 
-    /** Utility method to generate an error message. */
+    /**
+     * Utility method to generate an error message.
+     */
     public static String boardShouldChange(Side side) {
         return "When tilted to the " + side + ", the model should change, but"
                 + " the call to tilt returned false.\nModel after call:" + TestUtils.model;
     }
 
-    /** Utility method to generate an error message. */
+    /**
+     * Utility method to generate an error message.
+     */
     public static String boardShouldNotChange(Side side) {
         return "When tilted to the " + side + ", the model should NOT change,"
                 + " but the call to tilt returned true.\nModel after call:" + TestUtils.model;
@@ -74,4 +81,5 @@ public class TestUtils {
             assertFalse(changedErrMsg, actual);
         }
     }
+
 }

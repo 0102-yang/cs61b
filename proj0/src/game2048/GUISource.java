@@ -38,20 +38,20 @@ class GUISource implements InputSource {
     public String getKey() {
         String command = this.source.readKey();
         switch (command) {
-        case "↑":
-            command = "Up";
-            break;
-        case "→":
-            command = "Right";
-            break;
-        case "↓":
-            command = "Down";
-            break;
-        case "←":
-            command = "Left";
-            break;
-        default:
-            break;
+            case "↑":
+                command = "Up";
+                break;
+            case "→":
+                command = "Right";
+                break;
+            case "↓":
+                command = "Down";
+                break;
+            case "←":
+                command = "Left";
+                break;
+            default:
+                break;
         }
 
         String logLine = String.format("K %s%n", command);
@@ -83,12 +83,24 @@ class GUISource implements InputSource {
         return Tile.create(v, c, r);
     }
 
-    /** Input source. */
+    /**
+     * Input source.
+     */
     private GUI source;
-    /** Random source for Tiles. */
+
+    /**
+     * Random source for Tiles.
+     */
     private Random randomSource;
-    /** Probabilty that value of new Tile is 2 rather than 4. */
+
+    /**
+     * Probabilty that value of new Tile is 2 rather than 4.
+     */
     private double probOf2;
-    /** The FileWriter to log inputs to (null if no logging required). */
+
+    /**
+     * The FileWriter to log inputs to (null if no logging required).
+     */
     private FileWriter logFileWriter;
+
 }

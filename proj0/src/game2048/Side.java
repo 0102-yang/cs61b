@@ -37,7 +37,9 @@ public enum Side {
         this.dcol = dcol;
     }
 
-    /** Returns the side opposite of side S. */
+    /**
+     * Returns the side opposite of side S.
+     */
     static Side opposite(Side s) {
         if (s == Side.NORTH) {
             return Side.SOUTH;
@@ -66,6 +68,8 @@ public enum Side {
         return this.row0 * (size - 1) - c * this.dcol + r * this.drow;
     }
 
-    /** Parameters describing this Side, as documented in the comment at the start of this class. */
+    /**
+     * Parameters describing this Side, as documented in the comment at the start of this class.
+     */
     private int row0, col0, drow, dcol;
 };

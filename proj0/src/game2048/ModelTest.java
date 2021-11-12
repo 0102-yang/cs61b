@@ -1,9 +1,9 @@
 package game2048;
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
 
 /**
  * Tests of the Model class.
@@ -25,8 +25,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Checks right two pieces merge when 3 adjacent pieces have same value. */
     public void testTripleMerge1() {
-        int[][] before = new int[][] { { 2, 0, 0, 0 }, { 2, 0, 0, 0 }, { 2, 0, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 4, 0, 0, 0 }, { 2, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{2, 0, 0, 0}, {2, 0, 0, 0}, {2, 0, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{4, 0, 0, 0}, {2, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -38,8 +38,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Checks right two pieces merge when 3 adjacent pieces have same value. */
     public void testTripleMerge2() {
-        int[][] before = new int[][] { { 2, 0, 0, 0 }, { 2, 0, 0, 0 }, { 2, 0, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 0, 0, 0 }, { 4, 0, 0, 0 }, };
+        int[][] before = new int[][]{{2, 0, 0, 0}, {2, 0, 0, 0}, {2, 0, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {2, 0, 0, 0}, {4, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -51,8 +51,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Checks two adjacent merges work. */
     public void testQuadrupleMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 2 }, { 0, 0, 0, 2 }, { 0, 0, 0, 2 }, { 0, 0, 0, 2 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 4 }, { 0, 0, 0, 4 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 2}, {0, 0, 0, 2}, {0, 0, 0, 2}, {0, 0, 0, 2},};
+        int[][] after = new int[][]{{0, 0, 0, 4}, {0, 0, 0, 4}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -64,8 +64,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Checks that a tile only merges once per tilt. */
     public void testSingleMergeUp() {
-        int[][] before = new int[][] { { 2, 0, 0, 0 }, { 2, 0, 0, 0 }, { 0, 0, 0, 0 }, { 4, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 4, 0, 0, 0 }, { 4, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{2, 0, 0, 0}, {2, 0, 0, 0}, {0, 0, 0, 0}, {4, 0, 0, 0},};
+        int[][] after = new int[][]{{4, 0, 0, 0}, {4, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
         boolean changed = TestUtils.model.tilt(Side.NORTH);
@@ -76,8 +76,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Checks that a tile only merges once per tilt. */
     public void testSingleMergeSouth() {
-        int[][] before = new int[][] { { 4, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 0, 0, 0 }, { 2, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 4, 0, 0, 0 }, { 4, 0, 0, 0 }, };
+        int[][] before = new int[][]{{4, 0, 0, 0}, {0, 0, 0, 0}, {2, 0, 0, 0}, {2, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {4, 0, 0, 0}, {4, 0, 0, 0},};
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
         boolean changed = TestUtils.model.tilt(Side.SOUTH);
@@ -88,8 +88,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Checks that a tile only merges once per tilt. */
     public void testSingleMergeEast() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 4, 0, 2, 2 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 4, 4 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {4, 0, 2, 2},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 4, 4},};
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
         boolean changed = TestUtils.model.tilt(Side.EAST);
@@ -100,8 +100,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Checks that a tile only merges once per tilt. */
     public void testSingleMergeWest() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 2, 0, 4 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 4, 4, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {2, 2, 0, 4},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {4, 4, 0, 0},};
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
         boolean changed = TestUtils.model.tilt(Side.WEST);
@@ -112,7 +112,7 @@ public class ModelTest extends TestUtils {
     @Test
     /** Checks that a tilt that causes no change returns false. */
     public void testNoMove() {
-        int[][] before = new int[][] { { 2, 0, 2, 2 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{2, 0, 2, 2}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
         int[][] after = before;
 
         TestUtils.updateModel(before, 0, 0, false);
@@ -125,8 +125,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move tiles up (no merging). */
     public void testUpNoMerge() {
-        int[][] before = new int[][] { { 0, 0, 4, 0 }, { 0, 0, 0, 2 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 4, 2 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 4, 0}, {0, 0, 0, 2}, {0, 0, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 4, 2}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -138,8 +138,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move adjacent tiles up (no merging). */
     public void testUpAdjacentNoMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 4, 0 }, { 0, 0, 2, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 4, 0 }, { 0, 0, 2, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 4, 0}, {0, 0, 2, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 4, 0}, {0, 0, 2, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -151,8 +151,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move non-adjacent tiles up (no merging). */
     public void testUpNonAdjacentNoMerge1() {
-        int[][] before = new int[][] { { 0, 0, 4, 0 }, { 0, 0, 0, 0 }, { 0, 0, 2, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 4, 0 }, { 0, 0, 2, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 4, 0}, {0, 0, 0, 0}, {0, 0, 2, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 4, 0}, {0, 0, 2, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -164,8 +164,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move non-adjacent tiles up (no merging); case 2: both tiles move. */
     public void testMoveUpNonAdjacentNoMerge2() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 4, 0 }, { 0, 0, 0, 0 }, { 0, 0, 2, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 4, 0 }, { 0, 0, 2, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 4, 0}, {0, 0, 0, 0}, {0, 0, 2, 0},};
+        int[][] after = new int[][]{{0, 0, 4, 0}, {0, 0, 2, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -177,8 +177,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Merge adjacent tiles up. */
     public void testUpAdjacentMerge() {
-        int[][] before = new int[][] { { 0, 0, 2, 0 }, { 0, 0, 2, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 4, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 2, 0}, {0, 0, 2, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 4, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -190,8 +190,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Merge non-adjacent tiles up. */
     public void testUpNonAdjacentMerge() {
-        int[][] before = new int[][] { { 0, 0, 2, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 2, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 4, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 2, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 2, 0},};
+        int[][] after = new int[][]{{0, 0, 4, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -203,8 +203,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move and merge adjacent tiles up. */
     public void testUpAdjacentMergeMove() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 2, 0 }, { 0, 0, 2, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 4, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 2, 0}, {0, 0, 2, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 4, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -216,8 +216,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move tiles right (no merging). */
     public void testRightNoMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 4 }, { 0, 0, 2, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 4 }, { 0, 0, 0, 2 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 4}, {0, 0, 2, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 4}, {0, 0, 0, 2},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -229,8 +229,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move adjacent tiles right (no merging). */
     public void testRightAdjacentNoMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 2, 4, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 2, 4 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 2, 4, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 2, 4}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -242,8 +242,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move adjacent tiles right (no merging). */
     public void testRightNonAdjacentNoMerge1() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 2, 0, 4 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 2, 4 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 2, 0, 4}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 2, 4}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -255,8 +255,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move adjacent tiles right (no merging); case 2: both tiles move. */
     public void testRightNonAdjacentNoMerge2() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 0, 4, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 2, 4 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {2, 0, 4, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 2, 4}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -268,8 +268,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Merge adjacent tiles right. */
     public void testRightAdjacentMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 2, 2 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 4 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 2, 2}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 4}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -281,8 +281,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Merge non-adjacent tiles right. */
     public void testRightNonAdjacentMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 0, 0, 2 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 4 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {2, 0, 0, 2}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 4}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -294,8 +294,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move and merge adjacent tiles right. */
     public void testRightAdjacentMergeMove() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 2, 2, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 4 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 2, 2, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 4}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -307,8 +307,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move and merge non-adjacent tiles right. */
     public void testRightNonAdjacentMergeMove() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 0, 2, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 4 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {2, 0, 2, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 4}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -320,8 +320,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move tiles down (no merging). */
     public void testDownNoMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 0, 0, 0 }, { 0, 4, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 4, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {2, 0, 0, 0}, {0, 4, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {2, 4, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -333,8 +333,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move adjacent tiles down (no merging). */
     public void testDownAdjacentNoMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 2, 0, 0 }, { 0, 4, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 2, 0, 0 }, { 0, 4, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 2, 0, 0}, {0, 4, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 2, 0, 0}, {0, 4, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -346,8 +346,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move non-adjacent tiles down (no merging). */
     public void testDownNonAdjacentNoMerge1() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 2, 0, 0 }, { 0, 0, 0, 0 }, { 0, 4, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 2, 0, 0 }, { 0, 4, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 2, 0, 0}, {0, 0, 0, 0}, {0, 4, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 2, 0, 0}, {0, 4, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -359,8 +359,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Merge adjacent tiles down. */
     public void testDownAdjacentMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 2, 0, 0 }, { 0, 2, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 4, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 2, 0, 0}, {0, 2, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 4, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -372,8 +372,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Merge non-adjacent tiles down. */
     public void testDownNonAdjacentMerge() {
-        int[][] before = new int[][] { { 0, 2, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 2, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 4, 0, 0 }, };
+        int[][] before = new int[][]{{0, 2, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 2, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 4, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -385,8 +385,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move and merge adjacent tiles down. */
     public void testDownAdjacentMergeMove() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 2, 0, 0 }, { 0, 2, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 4, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 2, 0, 0}, {0, 2, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 4, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -398,8 +398,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move and merge non-adjacent tiles down. */
     public void testDownNonAdjacentMergeMove() {
-        int[][] before = new int[][] { { 0, 2, 0, 0 }, { 0, 0, 0, 0 }, { 0, 2, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 4, 0, 0 }, };
+        int[][] before = new int[][]{{0, 2, 0, 0}, {0, 0, 0, 0}, {0, 2, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 4, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -411,8 +411,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move tiles left (no merging). */
     public void testLeftNoMerge() {
-        int[][] before = new int[][] { { 4, 0, 0, 0 }, { 0, 2, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 4, 0, 0, 0 }, { 2, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{4, 0, 0, 0}, {0, 2, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{4, 0, 0, 0}, {2, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -424,8 +424,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move adjacent tiles left (no merging). */
     public void testLeftAdjacentNoMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 4, 2, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 4, 2, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 4, 2, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {4, 2, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -437,8 +437,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move non-adjacent tiles left (no merging). */
     public void testLeftNonAdjacentNoMerge1() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 4, 0, 2, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 4, 2, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {4, 0, 2, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {4, 2, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -450,8 +450,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Merge adjacent tiles left. */
     public void testLeftAdjacentMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 2, 2, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 4, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {2, 2, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {4, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -463,8 +463,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Merge non-adjacent tiles left. */
     public void testLeftNonAdjacentMerge() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 2, 0, 0, 2 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 4, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {2, 0, 0, 2}, {0, 0, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {4, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -476,8 +476,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move and merge adjacent tiles left. */
     public void testLeftAdjacentMergeMove() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 2, 2, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 4, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 2, 2, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {4, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -489,8 +489,8 @@ public class ModelTest extends TestUtils {
     @Test
     /** Move and merge non-adjacent tiles left. */
     public void testLeftNonAdjacentMergeMove() {
-        int[][] before = new int[][] { { 0, 0, 0, 0 }, { 0, 2, 0, 2 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
-        int[][] after = new int[][] { { 0, 0, 0, 0 }, { 4, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, };
+        int[][] before = new int[][]{{0, 0, 0, 0}, {0, 2, 0, 2}, {0, 0, 0, 0}, {0, 0, 0, 0},};
+        int[][] after = new int[][]{{0, 0, 0, 0}, {4, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},};
 
         TestUtils.updateModel(before, 0, 0, false);
         String prevBoard = TestUtils.model.toString();
@@ -508,7 +508,7 @@ public class ModelTest extends TestUtils {
     @Test
     /** No tilt can cause a change. */
     public void testGameOverNoChange1() {
-        int[][] board = { { 2, 4, 2, 4 }, { 4, 2, 4, 2 }, { 2, 4, 2, 4 }, { 4, 2, 4, 2 } };
+        int[][] board = {{2, 4, 2, 4}, {4, 2, 4, 2}, {2, 4, 2, 4}, {4, 2, 4, 2}};
 
         TestUtils.updateModel(board, 0, 0, false);
         assertTrue("Game is over. No tilt would result in a change" + TestUtils.model, TestUtils.model.gameOver());
@@ -517,7 +517,7 @@ public class ModelTest extends TestUtils {
     @Test
     /** The MAX_PIECE (2048) tile is on the board. */
     public void testGameOverMaxPiece() {
-        int[][] board = { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 2048 } };
+        int[][] board = {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 2048}};
 
         TestUtils.updateModel(board, 0, 0, false);
         assertTrue("Game is over. Tile with 2048 is on board:" + TestUtils.model, TestUtils.model.gameOver());
@@ -526,7 +526,7 @@ public class ModelTest extends TestUtils {
     @Test
     /** No tilt can cause a change. */
     public void testGameOverNoChange2() {
-        int[][] board = { { 128, 4, 2, 4 }, { 4, 32, 4, 2 }, { 8, 16, 2, 8 }, { 4, 32, 4, 1024 } };
+        int[][] board = {{128, 4, 2, 4}, {4, 32, 4, 2}, {8, 16, 2, 8}, {4, 32, 4, 1024}};
 
         TestUtils.updateModel(board, 0, 0, false);
         assertTrue("Game is over. Tile with 2048 is on board:" + TestUtils.model, TestUtils.model.gameOver());
@@ -535,7 +535,7 @@ public class ModelTest extends TestUtils {
     @Test
     /** Any tilt will change the board. */
     public void testGameNotOver1() {
-        int[][] board = { { 2, 4, 2, 2 }, { 4, 2, 4, 2 }, { 2, 4, 2, 4 }, { 4, 2, 4, 2 } };
+        int[][] board = {{2, 4, 2, 2}, {4, 2, 4, 2}, {2, 4, 2, 4}, {4, 2, 4, 2}};
         TestUtils.updateModel(board, 0, 0, false);
         assertFalse("Game isn't over. Any tilt will result in a change:" + TestUtils.model, TestUtils.model.gameOver());
     }
@@ -543,7 +543,7 @@ public class ModelTest extends TestUtils {
     @Test
     /** A tilt right or down will change the board. */
     public void testGameNotOver2() {
-        int[][] board = { { 2, 4, 2, 4 }, { 4, 2, 4, 2 }, { 2, 4, 2, 4 }, { 4, 2, 4, 0 } };
+        int[][] board = {{2, 4, 2, 4}, {4, 2, 4, 2}, {2, 4, 2, 4}, {4, 2, 4, 0}};
         TestUtils.updateModel(board, 0, 0, false);
         assertFalse("Game isn't over. A tilt right or down will result" + " in a change:" + TestUtils.model,
                 TestUtils.model.gameOver());
@@ -560,7 +560,7 @@ public class ModelTest extends TestUtils {
     @Test
     /** Will test multiple moves on the Model. */
     public void testMultipleMoves1() {
-        int[][] board = new int[][] { { 0, 0, 0, 0 }, { 0, 2, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 2 } };
+        int[][] board = new int[][]{{0, 0, 0, 0}, {0, 2, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 2}};
 
         String prevBoard;
         String currBoard;
@@ -573,7 +573,7 @@ public class ModelTest extends TestUtils {
         prevBoard = board.toString();
         currMove = Side.EAST;
         TestUtils.model.tilt(currMove);
-        TestUtils.checkModel(new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 2 }, { 0, 0, 0, 0 }, { 0, 0, 0, 2 } }, totalScore,
+        TestUtils.checkModel(new int[][]{{0, 0, 0, 0}, {0, 0, 0, 2}, {0, 0, 0, 0}, {0, 0, 0, 2}}, totalScore,
                 0, prevBoard, currMove);
         toAdd = Tile.create(2, 3, 1);
         TestUtils.model.addTile(toAdd);
@@ -582,7 +582,7 @@ public class ModelTest extends TestUtils {
         currMove = Side.NORTH;
         totalScore += 4;
         TestUtils.model.tilt(currMove);
-        TestUtils.checkModel(new int[][] { { 0, 0, 0, 4 }, { 0, 0, 0, 2 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }, totalScore,
+        TestUtils.checkModel(new int[][]{{0, 0, 0, 4}, {0, 0, 0, 2}, {0, 0, 0, 0}, {0, 0, 0, 0}}, totalScore,
                 0, prevBoard, currMove);
         toAdd = Tile.create(2, 0, 1);
         TestUtils.model.addTile(toAdd);
@@ -590,7 +590,7 @@ public class ModelTest extends TestUtils {
         prevBoard = TestUtils.model.toString();
         currMove = Side.EAST;
         TestUtils.model.tilt(currMove);
-        TestUtils.checkModel(new int[][] { { 0, 0, 0, 4 }, { 0, 0, 0, 2 }, { 0, 0, 0, 2 }, { 0, 0, 0, 0 } }, totalScore,
+        TestUtils.checkModel(new int[][]{{0, 0, 0, 4}, {0, 0, 0, 2}, {0, 0, 0, 2}, {0, 0, 0, 0}}, totalScore,
                 0, prevBoard, currMove);
         toAdd = Tile.create(4, 2, 0);
         TestUtils.model.addTile(toAdd);
@@ -599,7 +599,7 @@ public class ModelTest extends TestUtils {
         currMove = Side.NORTH;
         totalScore += 4;
         TestUtils.model.tilt(currMove);
-        TestUtils.checkModel(new int[][] { { 0, 0, 4, 4 }, { 0, 0, 0, 4 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }, totalScore,
+        TestUtils.checkModel(new int[][]{{0, 0, 4, 4}, {0, 0, 0, 4}, {0, 0, 0, 0}, {0, 0, 0, 0}}, totalScore,
                 0, prevBoard, currMove);
         toAdd = Tile.create(4, 0, 3);
         TestUtils.model.addTile(toAdd);
@@ -608,14 +608,14 @@ public class ModelTest extends TestUtils {
         currMove = Side.SOUTH;
         totalScore += 8;
         TestUtils.model.tilt(currMove);
-        TestUtils.checkModel(new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 4, 0, 4, 8 } }, totalScore,
+        TestUtils.checkModel(new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {4, 0, 4, 8}}, totalScore,
                 0, prevBoard, currMove);
     }
 
     @Test
     /** Will test multiple moves on the Model that end the game. */
     public void testMultipleMoves2() {
-        int[][] board = new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 256, 256, 0 }, { 1024, 0, 0, 512 } };
+        int[][] board = new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 256, 256, 0}, {1024, 0, 0, 512}};
 
         String prevBoard;
         String currBoard;
@@ -629,7 +629,7 @@ public class ModelTest extends TestUtils {
         currMove = Side.EAST;
         totalScore += 512;
         TestUtils.model.tilt(currMove);
-        TestUtils.checkModel(new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 512 }, { 0, 0, 1024, 512 } },
+        TestUtils.checkModel(new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 512}, {0, 0, 1024, 512}},
                 totalScore, 0, prevBoard, currMove);
         toAdd = Tile.create(2, 0, 0);
         TestUtils.model.addTile(toAdd);
@@ -638,7 +638,7 @@ public class ModelTest extends TestUtils {
         currMove = Side.SOUTH;
         TestUtils.model.tilt(currMove);
         totalScore += 1024;
-        TestUtils.checkModel(new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 0, 1024, 1024 } },
+        TestUtils.checkModel(new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {2, 0, 1024, 1024}},
                 totalScore, 0, prevBoard, currMove);
         toAdd = Tile.create(2, 0, 1);
         TestUtils.model.addTile(toAdd);
@@ -648,14 +648,14 @@ public class ModelTest extends TestUtils {
         TestUtils.model.tilt(currMove);
         totalScore += 2048;
         assertTrue("Game is over. Tile with 2048 is on board:" + TestUtils.model, TestUtils.model.gameOver());
-        TestUtils.checkModel(new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 0, 0, 0 }, { 2, 2048, 0, 0 } },
+        TestUtils.checkModel(new int[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {2, 0, 0, 0}, {2, 2048, 0, 0}},
                 totalScore, totalScore, prevBoard, currMove);
     }
 
     @Test
     /** Will test multiple moves on the Model. */
     public void testMultipleMoves3() {
-        int[][] board = new int[][] { { 0, 2, 2, 0 }, { 4, 0, 4, 0 }, { 4, 0, 8, 0 }, { 8, 0, 0, 0 } };
+        int[][] board = new int[][]{{0, 2, 2, 0}, {4, 0, 4, 0}, {4, 0, 8, 0}, {8, 0, 0, 0}};
 
         String prevBoard;
         String currBoard;
@@ -669,7 +669,7 @@ public class ModelTest extends TestUtils {
         currMove = Side.EAST;
         totalScore += 4 + 8;
         TestUtils.model.tilt(currMove);
-        TestUtils.checkModel(new int[][] { { 0, 0, 0, 4 }, { 0, 0, 0, 8 }, { 0, 0, 4, 8 }, { 0, 0, 0, 8 } }, totalScore,
+        TestUtils.checkModel(new int[][]{{0, 0, 0, 4}, {0, 0, 0, 8}, {0, 0, 4, 8}, {0, 0, 0, 8}}, totalScore,
                 0, prevBoard, currMove);
         toAdd = Tile.create(2, 1, 2);
         TestUtils.model.addTile(toAdd);
@@ -678,7 +678,7 @@ public class ModelTest extends TestUtils {
         currMove = Side.SOUTH;
         totalScore += 16;
         TestUtils.model.tilt(currMove);
-        TestUtils.checkModel(new int[][] { { 0, 0, 0, 0 }, { 0, 0, 0, 4 }, { 0, 0, 0, 8 }, { 0, 2, 4, 16 } },
+        TestUtils.checkModel(new int[][]{{0, 0, 0, 0}, {0, 0, 0, 4}, {0, 0, 0, 8}, {0, 2, 4, 16}},
                 totalScore, 0, prevBoard, currMove);
         toAdd = Tile.create(2, 1, 1);
         TestUtils.model.addTile(toAdd);
@@ -687,7 +687,7 @@ public class ModelTest extends TestUtils {
         currMove = Side.NORTH;
         totalScore += 4;
         TestUtils.model.tilt(currMove);
-        TestUtils.checkModel(new int[][] { { 0, 4, 4, 4 }, { 0, 0, 0, 8 }, { 0, 0, 0, 16 }, { 0, 0, 0, 0 } },
+        TestUtils.checkModel(new int[][]{{0, 4, 4, 4}, {0, 0, 0, 8}, {0, 0, 0, 16}, {0, 0, 0, 0}},
                 totalScore, 0, prevBoard, currMove);
         toAdd = Tile.create(4, 0, 0);
         TestUtils.model.addTile(toAdd);
@@ -695,7 +695,7 @@ public class ModelTest extends TestUtils {
         prevBoard = TestUtils.model.toString();
         currMove = Side.NORTH;
         TestUtils.model.tilt(currMove);
-        TestUtils.checkModel(new int[][] { { 4, 4, 4, 4 }, { 0, 0, 0, 8 }, { 0, 0, 0, 16 }, { 0, 0, 0, 0 } },
+        TestUtils.checkModel(new int[][]{{4, 4, 4, 4}, {0, 0, 0, 8}, {0, 0, 0, 16}, {0, 0, 0, 0}},
                 totalScore, 0, prevBoard, currMove);
         toAdd = Tile.create(2, 3, 0);
         TestUtils.model.addTile(toAdd);
@@ -704,7 +704,8 @@ public class ModelTest extends TestUtils {
         currMove = Side.EAST;
         totalScore += 8 + 8;
         TestUtils.model.tilt(currMove);
-        TestUtils.checkModel(new int[][] { { 0, 0, 8, 8 }, { 0, 0, 0, 8 }, { 0, 0, 0, 16 }, { 0, 0, 0, 2 } },
+        TestUtils.checkModel(new int[][]{{0, 0, 8, 8}, {0, 0, 0, 8}, {0, 0, 0, 16}, {0, 0, 0, 2}},
                 totalScore, 0, prevBoard, currMove);
     }
+
 }

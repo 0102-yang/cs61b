@@ -1,9 +1,6 @@
 package game2048;
 
-import static game2048.Side.EAST;
-import static game2048.Side.NORTH;
-import static game2048.Side.SOUTH;
-import static game2048.Side.WEST;
+import static game2048.Side.*;
 
 /**
  * The input/output and GUI controller for play of a game of 2048.
@@ -22,7 +19,9 @@ public class Game {
         this.playing = true;
     }
 
-    /** Return true iff we have not received a Quit command. */
+    /**
+     * Return true iff we have not received a Quit command.
+     */
     boolean playing() {
         return this.playing;
     }
@@ -46,48 +45,50 @@ public class Game {
             while (!moved) {
                 String cmnd = this.source.getKey();
                 switch (cmnd) {
-                case "Quit":
-                    this.playing = false;
-                    return;
-                case "New Game":
-                    return;
-                case "Up":
-                case "Down":
-                case "Left":
-                case "Right":
-                case "\u2190":
-                case "\u2191":
-                case "\u2192":
-                case "\u2193":
-                    if (!this.model.gameOver() && this.model.tilt(keyToSide(cmnd))) {
-                        this.model.notifyObservers(cmnd);
-                        moved = true;
-                    }
-                    break;
-                default:
-                    break;
+                    case "Quit":
+                        this.playing = false;
+                        return;
+                    case "New Game":
+                        return;
+                    case "Up":
+                    case "Down":
+                    case "Left":
+                    case "Right":
+                    case "\u2190":
+                    case "\u2191":
+                    case "\u2192":
+                    case "\u2193":
+                        if (!this.model.gameOver() && this.model.tilt(keyToSide(cmnd))) {
+                            this.model.notifyObservers(cmnd);
+                            moved = true;
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
         }
     }
 
-    /** Return the side indicated by KEY ("Up", "Down", "Left", or "Right"). */
+    /**
+     * Return the side indicated by KEY ("Up", "Down", "Left", or "Right").
+     */
     private Side keyToSide(String key) {
         switch (key) {
-        case "Up":
-        case "\u2191":
-            return NORTH;
-        case "Down":
-        case "\u2193":
-            return SOUTH;
-        case "Left":
-        case "\u2190":
-            return WEST;
-        case "Right":
-        case "\u2192":
-            return EAST;
-        default:
-            throw new IllegalArgumentException("unknown key designation");
+            case "Up":
+            case "\u2191":
+                return NORTH;
+            case "Down":
+            case "\u2193":
+                return SOUTH;
+            case "Left":
+            case "\u2190":
+                return WEST;
+            case "Right":
+            case "\u2192":
+                return EAST;
+            default:
+                throw new IllegalArgumentException("unknown key designation");
         }
     }
 
@@ -105,12 +106,19 @@ public class Game {
         }
     }
 
-    /** The playing board. */
+    /**
+     * The playing board.
+     */
     private Model model;
 
-    /** Input source from standard input. */
+    /**
+     * Input source from standard input.
+     */
     private InputSource source;
 
-    /** True while user is still willing to play. */
+    /**
+     * True while user is still willing to play.
+     */
     private boolean playing;
+
 }

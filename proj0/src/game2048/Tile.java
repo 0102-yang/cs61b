@@ -18,39 +18,53 @@ public class Tile {
         this.next = null;
     }
 
-    /** Return my current row. */
+    /**
+     * Return my current row.
+     */
     public int row() {
         return this.row;
     }
 
-    /** Return my current column. */
+    /**
+     * Return my current column.
+     */
     public int col() {
         return this.col;
     }
 
-    /** Return the value supplied to my constructor. */
+    /**
+     * Return the value supplied to my constructor.
+     */
     public int value() {
         return this.value;
     }
 
-    /** Return my next state. Before I am moved or merged, I am my own successor. */
+    /**
+     * Return my next state. Before I am moved or merged, I am my own successor.
+     */
     public Tile next() {
         return this.next == null ? this : this.next;
     }
 
-    /** Return a new tile at (ROW, COL) with value VALUE. */
+    /**
+     * Return a new tile at (ROW, COL) with value VALUE.
+     */
     public static Tile create(int value, int col, int row) {
         return new Tile(value, col, row);
     }
 
-    /** Return the result of moving me to (COL, ROW). */
+    /**
+     * Return the result of moving me to (COL, ROW).
+     */
     public Tile move(int col, int row) {
         Tile result = new Tile(this.value, col, row);
         this.next = result;
         return result;
     }
 
-    /** Return the result of merging OTHERTILE with me after moving to (COL, ROW). */
+    /**
+     * Return the result of merging OTHERTILE with me after moving to (COL, ROW).
+     */
     public Tile merge(int col, int row, Tile otherTile) {
         assert this.value == otherTile.value();
         this.next = otherTile.next = new Tile(2 * this.value, col, row);
@@ -75,12 +89,19 @@ public class Tile {
         return String.format("%d@(%d, %d)", value(), col(), row());
     }
 
-    /** My value. */
+    /**
+     * My value.
+     */
     private final int value;
 
-    /** My last position on the board. */
+    /**
+     * My last position on the board.
+     */
     private final int row, col;
 
-    /** Successor tile: one I am moved to or merged with. */
+    /**
+     * Successor tile: one I am moved to or merged with.
+     */
     private Tile next;
+
 }

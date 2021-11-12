@@ -4,11 +4,19 @@ import java.util.Arrays;
 import java.util.Formatter;
 import java.util.Iterator;
 
-/** @author hug */
+/**
+ * @author hug
+ */
 public class Board implements Iterable<Tile> {
-    /** Current contents of the board. */
+
+    /**
+     * Current contents of the board.
+     */
     private Tile[][] values;
-    /** Side that the board currently views as north. */
+
+    /**
+     * Side that the board currently views as north.
+     */
     private Side viewPerspective;
 
     public Board(int size) {
@@ -47,12 +55,16 @@ public class Board implements Iterable<Tile> {
         }
     }
 
-    /** Returns the size of the board. */
+    /**
+     * Returns the size of the board.
+     */
     public int size() {
         return this.values.length;
     }
 
-    /** Shifts the view of the Board. */
+    /**
+     * Shifts the view of the Board.
+     */
     public void startViewingFrom(Side s) {
         this.viewPerspective = s;
     }
@@ -73,14 +85,18 @@ public class Board implements Iterable<Tile> {
         return vtile(col, row, this.viewPerspective);
     }
 
-    /** Clear the board to empty and reset the score. */
+    /**
+     * Clear the board to empty and reset the score.
+     */
     public void clear() {
         for (Tile[] column : this.values) {
             Arrays.fill(column, null);
         }
     }
 
-    /** Adds the tile T to the board */
+    /**
+     * Adds the tile T to the board
+     */
     public void addTile(Tile t) {
         this.values[t.col()][t.row()] = t;
     }
@@ -109,7 +125,9 @@ public class Board implements Iterable<Tile> {
         }
     }
 
-    /** Returns the board as a string, used for debugging. */
+    /**
+     * Returns the board as a string, used for debugging.
+     */
     @Override
     public String toString() {
         Formatter out = new Formatter();
@@ -129,8 +147,11 @@ public class Board implements Iterable<Tile> {
         return res;
     }
 
-    /** Iterates through teach tile in the board. */
+    /**
+     * Iterates through teach tile in the board.
+     */
     private class AllTileIterator implements Iterator<Tile>, Iterable<Tile> {
+
         int r, c;
 
         AllTileIterator() {
@@ -158,10 +179,12 @@ public class Board implements Iterable<Tile> {
         public Iterator<Tile> iterator() {
             return this;
         }
+
     }
 
     @Override
     public Iterator<Tile> iterator() {
         return new AllTileIterator();
     }
+
 }

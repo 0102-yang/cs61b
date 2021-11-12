@@ -1,17 +1,12 @@
 package game2048;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.max;
-import static java.lang.Math.round;
+import ucb.gui2.Pad;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ucb.gui2.Pad;
+import static java.lang.Math.*;
 
 /**
  * A widget that displays a 2048 board.
@@ -22,59 +17,89 @@ class BoardWidget extends Pad {
 
     /* Parameters controlling sizes, speeds, colors, and fonts. */
 
-    /** Colors of empty squares and grid lines. */
+    /**
+     * Colors of empty squares and grid lines.
+     */
     static final Color EMPTY_SQUARE_COLOR = new Color(205, 192, 176), BAR_COLOR = new Color(184, 173, 158);
 
-    /** Bar width separating tiles and length of tile's side (pixels). */
+    /**
+     * Bar width separating tiles and length of tile's side (pixels).
+     */
     static final int TILE_SEP = 15, TILE_SIDE = 100, TILE_SIDE_SEP = BoardWidget.TILE_SEP + BoardWidget.TILE_SIDE;
 
-    /** Font used for numbering on tiles with <= 2 digits. */
+    /**
+     * Font used for numbering on tiles with <= 2 digits.
+     */
     static final Font TILE_FONT2 = new Font("SansSerif", 1, 48);
-    /** Font used for numbering on tiles with 3 digits. */
+
+    /**
+     * Font used for numbering on tiles with 3 digits.
+     */
     static final Font TILE_FONT3 = new Font("SansSerif", 1, 40);
-    /** Font used for numbering on tiles with 4 digits. */
+
+    /**
+     * Font used for numbering on tiles with 4 digits.
+     */
     static final Font TILE_FONT4 = new Font("SansSerif", 1, 32);
 
-    /** Color for overlay text on board. */
+    /**
+     * Color for overlay text on board.
+     */
     static final Color OVERLAY_COLOR = new Color(200, 0, 0, 64);
 
-    /** Font for overlay text on board. */
+    /**
+     * Font for overlay text on board.
+     */
     static final Font OVERLAY_FONT = new Font("SansSerif", 1, 64);
 
-    /** Wait between animation steps (in milliseconds). */
+    /**
+     * Wait between animation steps (in milliseconds).
+     */
     static final int TICK = 10;
 
-    /** Amount to move per second (in rows/columns). */
+    /**
+     * Amount to move per second (in rows/columns).
+     */
     static final float MOVE_DELTA = 10.0f;
 
-    /** Fractional increase in size for "bloom effect". */
+    /**
+     * Fractional increase in size for "bloom effect".
+     */
     static final float BLOOM_FACTOR = 0.1f;
 
-    /** Time over which a tile "blooms" in seconds. */
+    /**
+     * Time over which a tile "blooms" in seconds.
+     */
     static final float BLOOM_TIME = 0.5f;
 
-    /** Ticks over which a tile "blooms" out or in. */
+    /**
+     * Ticks over which a tile "blooms" out or in.
+     */
     static final int BLOOM_TICKS = (int) (20.0 * BoardWidget.BLOOM_TIME / BoardWidget.TICK);
 
-    /** Mapping from numbers on tiles to their text and background colors. */
+    /**
+     * Mapping from numbers on tiles to their text and background colors.
+     */
     static final HashMap<Integer, Color[]> TILE_COLORS = new HashMap<>();
 
     /**
      * List of tile values and corresponding background and foreground color values.
      */
-    private static final int[][] TILE_COLOR_MAP = { { 2, 0x776e65, 0xeee4da }, { 4, 0x776e65, 0xede0c8 },
-            { 8, 0xf9f6f2, 0xf2b179 }, { 16, 0xf9f6f2, 0xf59563 }, { 32, 0xf9f6f2, 0xf67c5f },
-            { 64, 0xf9f6f2, 0xf65e3b }, { 128, 0xf9f6f2, 0xedcf72 }, { 256, 0xf9f6f2, 0xedcc61 },
-            { 512, 0xf9f6f2, 0xedc850 }, { 1024, 0xf9f6f2, 0xedc53f }, { 2048, 0xf9f6f2, 0xedc22e }, };
+    private static final int[][] TILE_COLOR_MAP = {{2, 0x776e65, 0xeee4da}, {4, 0x776e65, 0xede0c8},
+            {8, 0xf9f6f2, 0xf2b179}, {16, 0xf9f6f2, 0xf59563}, {32, 0xf9f6f2, 0xf67c5f},
+            {64, 0xf9f6f2, 0xf65e3b}, {128, 0xf9f6f2, 0xedcf72}, {256, 0xf9f6f2, 0xedcc61},
+            {512, 0xf9f6f2, 0xedc850}, {1024, 0xf9f6f2, 0xedc53f}, {2048, 0xf9f6f2, 0xedc22e},};
 
     static {
         /* { "LABEL", "TEXT COLOR (hex)", "BACKGROUND COLOR (hex)" } */
         for (int[] tileData : BoardWidget.TILE_COLOR_MAP) {
-            BoardWidget.TILE_COLORS.put(tileData[0], new Color[] { new Color(tileData[1]), new Color(tileData[2]) });
+            BoardWidget.TILE_COLORS.put(tileData[0], new Color[]{new Color(tileData[1]), new Color(tileData[2])});
         }
     }
 
-    /** A graphical representation of a 2048 board with SIZE rows and columns. */
+    /**
+     * A graphical representation of a 2048 board with SIZE rows and columns.
+     */
     BoardWidget(int size) {
         this.size = size;
         this.boardSide = size * BoardWidget.TILE_SIDE_SEP + BoardWidget.TILE_SEP;
@@ -82,13 +107,17 @@ class BoardWidget extends Pad {
         setPreferredSize(this.boardSide, this.boardSide);
     }
 
-    /** Clear all tiles from the board. */
+    /**
+     * Clear all tiles from the board.
+     */
     synchronized void clear() {
         this.tiles.clear();
         repaint();
     }
 
-    /** Indicate that "GAME OVER" label should be displayed. */
+    /**
+     * Indicate that "GAME OVER" label should be displayed.
+     */
     synchronized void markEnd() {
         this.end = true;
         repaint();
@@ -116,7 +145,9 @@ class BoardWidget extends Pad {
         }
     }
 
-    /** Render TILE on G. */
+    /**
+     * Render TILE on G.
+     */
     private void render(Graphics2D g, Tile tile) {
         int col0 = tile.col(), row0 = tile.row(), col1 = tile.next().col(), row1 = tile.next().row();
         int dcol = col0 < col1 ? 1 : col0 == col1 ? 0 : -1, drow = row0 < row1 ? 1 : row0 == row1 ? 0 : -1;
@@ -156,7 +187,9 @@ class BoardWidget extends Pad {
                 uly + (2 * BoardWidget.TILE_SIDE + metrics.getMaxAscent()) / 4);
     }
 
-    /** Return the list of all Tiles in MODEL. */
+    /**
+     * Return the list of all Tiles in MODEL.
+     */
     private ArrayList<Tile> modelTiles(Model model) {
         ArrayList<Tile> result = new ArrayList<>();
         for (int col = 0; col < model.size(); col += 1) {
@@ -185,7 +218,9 @@ class BoardWidget extends Pad {
         return bloomers;
     }
 
-    /** Wait for one tick (TICK milliseconds). */
+    /**
+     * Wait for one tick (TICK milliseconds).
+     */
     private void tick() {
         try {
             wait(BoardWidget.TICK);
@@ -194,7 +229,9 @@ class BoardWidget extends Pad {
         }
     }
 
-    /** Create the blooming effect on tiles in BLOOMINGTILES. */
+    /**
+     * Create the blooming effect on tiles in BLOOMINGTILES.
+     */
     private void doBlooming(ArrayList<Tile> bloomingTiles) {
         this.bloomingTiles = bloomingTiles;
         if (bloomingTiles.isEmpty()) {
@@ -241,9 +278,14 @@ class BoardWidget extends Pad {
         repaint();
     }
 
-    /** A list of Tiles currently being displayed. */
+    /**
+     * A list of Tiles currently being displayed.
+     */
     private ArrayList<Tile> tiles;
-    /** A list of Tiles currently being displayed with blooming effect. */
+
+    /**
+     * A list of Tiles currently being displayed with blooming effect.
+     */
     private ArrayList<Tile> bloomingTiles;
 
     /**
@@ -251,14 +293,25 @@ class BoardWidget extends Pad {
      * columns.
      */
     private float distMoved;
-    /** Amount to add to sides of tiles in _bloomingTiles. */
+
+    /**
+     * Amount to add to sides of tiles in _bloomingTiles.
+     */
     private int bloom;
 
-    /** Number of rows and of columns. */
+    /**
+     * Number of rows and of columns.
+     */
     private final int size;
 
-    /** Length (in pixels) of the side of the board. */
+    /**
+     * Length (in pixels) of the side of the board.
+     */
     private int boardSide;
-    /** True iff "GAME OVER" message is being displayed. */
+
+    /**
+     * True iff "GAME OVER" message is being displayed.
+     */
     private boolean end;
+
 }

@@ -10,7 +10,9 @@ import java.util.Observer;
  */
 class BoardLogger implements Observer {
 
-    /** A line to separate each move. */
+    /**
+     * A line to separate each move.
+     */
     private static final String LINE = "---------------------";
 
     @Override
@@ -25,4 +27,5 @@ class BoardLogger implements Observer {
         }
         System.out.printf("%n%s%n%s%s", BoardLogger.LINE, direction, model);
     }
+
 }

@@ -9,13 +9,25 @@ import java.util.Observable;
  * @author yang
  */
 public class Model extends Observable {
-    /** Current contents of the board. */
+
+    /**
+     * Current contents of the board.
+     */
     private Board board;
-    /** Current score. */
+
+    /**
+     * Current score.
+     */
     private int score;
-    /** Maximum score so far. Updated when game ends. */
+
+    /**
+     * Maximum score so far. Updated when game ends.
+     */
     private int maxScore;
-    /** True iff game is ended. */
+
+    /**
+     * True iff game is ended.
+     */
     private boolean gameOver;
 
     /*
@@ -24,10 +36,14 @@ public class Model extends Observable {
      * careful! It works like (x, y) coordinates.
      */
 
-    /** Largest piece value. */
+    /**
+     * Largest piece value.
+     */
     public static final int MAX_PIECE = 2048;
 
-    /** A new 2048 game on a board of size SIZE with no pieces and score 0. */
+    /**
+     * A new 2048 game on a board of size SIZE with no pieces and score 0.
+     */
     public Model(int size) {
         this.board = new Board(size);
         this.score = this.maxScore = 0;
@@ -75,17 +91,23 @@ public class Model extends Observable {
         return this.gameOver;
     }
 
-    /** Return the current score. */
+    /**
+     * Return the current score.
+     */
     public int score() {
         return this.score;
     }
 
-    /** Return the current maximum game score (updated at end of game). */
+    /**
+     * Return the current maximum game score (updated at end of game).
+     */
     public int maxScore() {
         return this.maxScore;
     }
 
-    /** Clear the board to empty and reset the score. */
+    /**
+     * Clear the board to empty and reset the score.
+     */
     public void clear() {
         this.score = 0;
         this.gameOver = false;
@@ -122,11 +144,11 @@ public class Model extends Observable {
         // DONE: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
-        int size = board.size();
+        int size = this.board.size();
         for (int i = 0; i < size; i++) {
             boolean flag = merge(i, side);
             if (!changed && flag) {
-                changed = flag;
+                changed = true;
             }
         }
 
@@ -138,7 +160,9 @@ public class Model extends Observable {
     }
 
     private static class Coordinate {
+
         int col;
+
         int row;
 
         private Coordinate(int col, int row) {
@@ -149,6 +173,7 @@ public class Model extends Observable {
         public static Coordinate generateCoordinate(int col, int row) {
             return new Coordinate(col, row);
         }
+
     }
 
     private void reverseArray(Coordinate[] coordinates) {
@@ -161,15 +186,15 @@ public class Model extends Observable {
 
     /**
      * Generate coordinates array for merge.
-     * 
+     *
      * @param index The index represent the col or row.
      * @param side  The merge direction right now.
      * @return The coordinates array.
      */
     private Coordinate[] generateCoordinates(int index, Side side) {
-        Coordinate[] coordinates = new Coordinate[board.size()];
+        Coordinate[] coordinates = new Coordinate[this.board.size()];
         if (side == Side.EAST || side == Side.WEST) {
-            for (int i = 0; i < board.size(); i++) {
+            for (int i = 0; i < this.board.size(); i++) {
                 Coordinate coordinate = Coordinate.generateCoordinate(i, index);
                 coordinates[i] = coordinate;
             }
@@ -177,7 +202,7 @@ public class Model extends Observable {
                 reverseArray(coordinates);
             }
         } else {
-            for (int i = 0; i < board.size(); i++) {
+            for (int i = 0; i < this.board.size(); i++) {
                 Coordinate coordinate = Coordinate.generateCoordinate(index, i);
                 coordinates[i] = coordinate;
             }
@@ -190,7 +215,7 @@ public class Model extends Observable {
 
     /**
      * Return the next coordinate of specified moving direction.
-     * 
+     *
      * @param col  Current col.
      * @param row  Current row.
      * @param side Current moving direction.
@@ -198,27 +223,27 @@ public class Model extends Observable {
      */
     private Coordinate next(int col, int row, Side side) {
         switch (side) {
-        case NORTH -> {
-            return Coordinate.generateCoordinate(col, row + 1);
-        }
-        case SOUTH -> {
-            return Coordinate.generateCoordinate(col, row - 1);
-        }
-        case EAST -> {
-            return Coordinate.generateCoordinate(col + 1, row);
-        }
-        case WEST -> {
-            return Coordinate.generateCoordinate(col - 1, row);
-        }
-        case default -> {
-            return null;
-        }
+            case NORTH -> {
+                return Coordinate.generateCoordinate(col, row + 1);
+            }
+            case SOUTH -> {
+                return Coordinate.generateCoordinate(col, row - 1);
+            }
+            case EAST -> {
+                return Coordinate.generateCoordinate(col + 1, row);
+            }
+            case WEST -> {
+                return Coordinate.generateCoordinate(col - 1, row);
+            }
+            default -> {
+                return null;
+            }
         }
     }
 
     /**
      * Check if this coordinate is valid.
-     * 
+     *
      * @param coordinate The coordinate.
      * @return True for valid.
      */
@@ -228,7 +253,7 @@ public class Model extends Observable {
 
     /**
      * Merge one col or one row.
-     * 
+     *
      * @param index The index represent col or row.
      * @param side  Current moving direction.
      * @return True for each of the tile has been moved.
@@ -238,14 +263,14 @@ public class Model extends Observable {
         Coordinate[] coordinates = generateCoordinates(index, side);
         boolean[][] isMerged = new boolean[size()][size()];
         for (Coordinate c : coordinates) {
-            Tile currentTile = board.tile(c.col, c.row);
+            Tile currentTile = this.board.tile(c.col, c.row);
             if (currentTile == null) {
                 continue;
             }
 
             boolean flag = moveSingleTile(currentTile, side, isMerged);
             if (!isChanged && flag) {
-                isChanged = flag;
+                isChanged = true;
             }
         }
         return isChanged;
@@ -253,7 +278,7 @@ public class Model extends Observable {
 
     /**
      * Move single tile to its destination.
-     * 
+     *
      * @param tile     Current tile.
      * @param side     Current moving side.
      * @param isMerged The bit map of whether tile is formed by merge.
@@ -263,20 +288,20 @@ public class Model extends Observable {
         boolean isChanged = false;
         while (true) {
             Coordinate next = next(tile.col(), tile.row(), side);
+            assert next != null;
             if (!validCoordinate(next)) {
                 break;
             }
 
-            Tile nextTile = board.tile(next.col, next.row);
+            Tile nextTile = this.board.tile(next.col, next.row);
             if (nextTile == null) {
-                board.move(next.col, next.row, tile);
+                this.board.move(next.col, next.row, tile);
                 tile = tile.next();
                 isChanged = true;
-            } else if (nextTile.value() == tile.value() && isMerged[next.col][next.row] == false) {
-                isMerged[next.col][next.row] = board.move(next.col, next.row, tile);
+            } else if (nextTile.value() == tile.value() && !isMerged[next.col][next.row]) {
+                isMerged[next.col][next.row] = this.board.move(next.col, next.row, tile);
                 int value = tile.value();
-                score += value * 2;
-                tile = tile.next();
+                this.score += value * 2;
                 isChanged = true;
                 break;
             } else {
@@ -286,12 +311,16 @@ public class Model extends Observable {
         return isChanged;
     }
 
-    /** Checks if the game is over and sets the gameOver variable appropriately. */
+    /**
+     * Checks if the game is over and sets the gameOver variable appropriately.
+     */
     private void checkGameOver() {
         this.gameOver = Model.checkGameOver(this.board);
     }
 
-    /** Determine whether game is over. */
+    /**
+     * Determine whether game is over.
+     */
     private static boolean checkGameOver(Board b) {
         return Model.maxTileExists(b) || !Model.atLeastOneMoveExists(b);
     }
@@ -302,9 +331,7 @@ public class Model extends Observable {
      */
     public static boolean emptySpaceExists(Board b) {
         // DONE: Fill in this function.
-        var itr = b.iterator();
-        while (itr.hasNext()) {
-            Tile tile = itr.next();
+        for (Tile tile : b) {
             if (tile == null) {
                 return true;
             }
@@ -322,7 +349,7 @@ public class Model extends Observable {
         var itr = b.iterator();
         while (itr.hasNext()) {
             Tile tile = itr.next();
-            if (tile != null && tile.value() == MAX_PIECE) {
+            if (tile != null && tile.value() == Model.MAX_PIECE) {
                 return true;
             }
         }
@@ -336,12 +363,12 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // DONE: Fill in this function.
-        if (emptySpaceExists(b)) {
+        if (Model.emptySpaceExists(b)) {
             return true;
         }
         int size = b.size();
         for (int i = 0; i < size; i++) {
-            if (checkCol(b, i) || checkRow(b, i)) {
+            if (Model.checkCol(b, i) || Model.checkRow(b, i)) {
                 return true;
             }
         }
@@ -411,4 +438,5 @@ public class Model extends Observable {
     public int hashCode() {
         return toString().hashCode();
     }
+
 }

@@ -1,12 +1,12 @@
 package game2048;
 
+import ucb.gui2.LayoutSpec;
+import ucb.gui2.TopLevel;
+
 import java.awt.event.KeyEvent;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.ArrayBlockingQueue;
-
-import ucb.gui2.LayoutSpec;
-import ucb.gui2.TopLevel;
 
 /**
  * The GUI controller for a 2048 board and buttons.
@@ -15,10 +15,14 @@ import ucb.gui2.TopLevel;
  */
 class GUI extends TopLevel implements Observer {
 
-    /** Minimum size of board in pixels. */
+    /**
+     * Minimum size of board in pixels.
+     */
     private static final int MIN_SIZE = 500;
 
-    /** A new window with given TITLE providing a view of MODEL. */
+    /**
+     * A new window with given TITLE providing a view of MODEL.
+     */
     GUI(String title, Model model) {
         super(title, true);
         addMenuButton("Game->New", this::newGame);
@@ -38,13 +42,17 @@ class GUI extends TopLevel implements Observer {
         setScore(0, 0);
     }
 
-    /** Response to "Quit" button click. */
+    /**
+     * Response to "Quit" button click.
+     */
     public void quit(String dummy) {
         this.pendingKeys.offer("Quit");
         this.widget.requestFocusInWindow();
     }
 
-    /** Response to "New Game" button click. */
+    /**
+     * Response to "New Game" button click.
+     */
     public void newGame(String dummy) {
         this.pendingKeys.offer("New Game");
         this.widget.requestFocusInWindow();
@@ -89,11 +97,19 @@ class GUI extends TopLevel implements Observer {
         setScore(this.model.score(), this.model.maxScore());
     }
 
-    /** The board widget. */
+    /**
+     * The board widget.
+     */
     private BoardWidget widget;
-    /** The game model being viewed. */
+
+    /**
+     * The game model being viewed.
+     */
     private Model model;
 
-    /** Queue of pending key presses. */
+    /**
+     * Queue of pending key presses.
+     */
     private ArrayBlockingQueue<String> pendingKeys = new ArrayBlockingQueue<>(5);
+
 }
