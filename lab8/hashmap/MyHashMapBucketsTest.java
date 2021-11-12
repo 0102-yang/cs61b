@@ -1,7 +1,6 @@
 package hashmap;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
 
 /**
  * Tests by Brendan Hu, Spring 2015
